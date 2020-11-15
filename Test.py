@@ -1,14 +1,15 @@
-from Card import *
-from Deck import *
-from Player import *
+from Utils import *
+from Card import Card
+from Pile import Pile
+from Player import Player
 
 Paul = Player("Dreadful")
-GameDeck = Deck()
-GameDeck.Populate()
+GamePile = Pile()
+GamePile.Populate()
 
-Paul.DealHand(GameDeck)
-Paul.AddToPile(GameDeck.Deal(25))
+Paul.DealHand(GamePile)
+Paul.AddToPile(GamePile.Deal(25))
 
-print(Paul)
-print("")
-print(GameDeck)
+Output(Paul)
+Output("")
+Output(GamePile)

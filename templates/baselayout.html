@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+
+    <title>Casino</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="../static/casino.css">
+  </head>
+
+  <body class="bg-light">
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">
+            Money Predicted
+        </a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+            <a class="nav-link" href=" {{ url_for('SignOut') }}">Sign out</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+            <div class="sidebar-sticky pt-3">
+                <ul class="nav flex-column">
+                      <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('Dashboard', ID=Session.FindRoot().GetID()) }}">
+                        <span data-feather="home"></span>
+                        Home <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        {% if Item %}
+                            <a class="nav-link" href="{{ url_for('Dashboard', ID=Item.GetParentID()) }}">
+                                <span data-feather="corner-left-up"></span>
+                                Go up
+                            </a>
+                        {% endif %}
+                    </li>
+                </ul>
+
+                <span>
+                </span>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                  Model
+              </h6>
+              <ul class="nav flex-column mb-2">
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('Create', ItemType='Asset') }}">  
+                      <span data-feather="file-plus"></span>
+                      Assets
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('Create', ItemType='Liability') }}">  
+                    <span data-feather="file-plus"></span>
+                      Liabilities
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('Create', ItemType='IncomeStream') }}">  
+                     <span data-feather="file-plus"></span>
+                      Income
+                     </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('Create', ItemType='ExpenseStream') }}">  
+                    <span data-feather="file-plus"></span>
+                      Expenses
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('Create', ItemType='Folio') }}">  
+                        <span data-feather="folder-plus"></span>
+                      Folders
+                      </a>
+                  </li>
+              </ul>
+          
+              <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                  Planning and Analysis
+              </h6>
+              <ul class="nav flex-column mb-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('TimeLine') }}">
+                    <span data-feather="list"></span>
+                        Timeline
+                    </a>
+                </li>
+                <li class="nav-item">
+                    {% if Item %}
+                        <a class="nav-link" href="{{ url_for('Analyze', ID=Item.GetID()) }}">
+                    {% else %}
+                        <a class="nav-link" href="{{ url_for('Analyze') }}">
+                    {% endif %}
+                    <span data-feather="activity"></span>
+                        Analysis
+                    </a>
+                </li>
+                <li class="nav-item">
+                    {% if Item %}
+                        <a class="nav-link" href="{{ url_for('CashFlow', ID=Item.GetID()) }}">
+                    {% else %}
+                        <a class="nav-link" href="{{ url_for('CashFlow') }}">
+                    {% endif %}
+                    <span data-feather="dollar-sign"></span>
+                        Cashflow Management
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                    <span data-feather="check-square"></span>
+                        Recommendations (new)
+                    </a>
+                  </li>
+              </ul>
+          
+              <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                  Reports
+              </h6>
+              <ul class="nav flex-column mb-2">
+                  <li class="nav-item">
+                    {% if Item %}
+                      <a class="nav-link" href=" {{ url_for('PFS', ID=Item.GetID(), Year=Year) }} ">
+                      <span data-feather="bar-chart"></span>
+                      Finance Statement
+                      </a>
+                      {% endif %}
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">
+                      <span data-feather="bar-chart"></span>
+                      Credit Utilization (new)
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">
+                      <span data-feather="bar-chart"></span>
+                      Asset Allocation (new)
+                      </a>
+                  </li>
+              </ul>
+              </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 bg-light h-100">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 my-3 border-bottom">
+                {% block Main_Section_Title %}
+                {% endblock Main_Section_Title %}
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    {% block ItemToolBar %}
+                    {% endblock ItemToolBar %}
+                </div>
+            </div>
+            <div class="container-fluid bg-light">
+                {% block Main_UpperSection %}
+                {% block Body %}
+                {% endblock Body%}
+                {% endblock Main_UpperSection %}
+
+                {% block Main_LowerSection %}
+                {% endblock Main_LowerSection %}
+            </div>
+        </main>
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script> feather.replace() </script>
+    
+    {% block ScriptSection %}
+    {% endblock ScriptSection %}
+</body>
+</html>
