@@ -1,6 +1,6 @@
 # =====================================================
 #    Card.py
-#      Basic class to represent a card in the deck
+#      Basic class to represent a card in the Pile
 # =====================================================
 
 class Card:

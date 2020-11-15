@@ -1,18 +1,18 @@
 from Card import Card
 
 # =====================================================
-#    Deck.py
-#    Basic class to represent a deck of cards
+#    Pile.py
+#    Basic class to represent a Pile of cards
 # =====================================================
 
-class Deck:
+class Pile:
     def __init__(self):
         self.Reset()
 
     def __repr__(self):
-        SummaryString = f"  Deck of {len(self.Cards)} cards, {self.GetPointTotal()} points" 
+        SummaryString = f"  Pile of {len(self.Cards)} cards, {self.GetPointTotal()} points" 
         for Card in self.Cards:
-            print(Card)
+            Output(Card)
         return SummaryString
 
     def Reset(self):
@@ -27,11 +27,11 @@ class Deck:
             Points += Card.GetPoints()
         return Points
 
-    # Populates a deck with the standard set of Cards in a Rook deck. 
+    # Populates a Pile with the standard set of Cards in a Rook Deck. 
     #
-    def Populate(self, RookDecks = 1):  
-        for CurrentDeck in range(0, RookDecks):
-            for Color in Deck.GetColors():
+    def Populate(self, Decks = 1):  
+        for PileIndex in range(0, Decks):
+            for Color in Pile.GetColors():
                 for Value in range(1, 14):
                     self.AddCard(Card(Value, Color))
 
