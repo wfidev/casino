@@ -3,7 +3,7 @@ from Card import Card
 
 # =====================================================
 #    Pile.py
-#    Basic class to represent a pile of cards
+#    Basic class to represent a pile of cards.
 # =====================================================
 
 class Pile:
